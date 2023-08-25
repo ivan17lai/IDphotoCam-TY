@@ -6,9 +6,11 @@
 ### 自動人臉識別裁切✅ 根據資料庫命名檔案✅
 
 # Download
+###### Windoes 10/11
+###### MacOS
 
 # Usage
 
-###### Windoes 10/11
+
 
 
