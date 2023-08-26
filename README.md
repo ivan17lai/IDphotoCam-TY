@@ -1,4 +1,3 @@
-![image](https://github.com/ivan17lai/HeadshotCam-Pro/assets/34911327/7175eef1-243e-436b-8d8b-8286888b4364)# HeadshotCam-Pro
 #### 一個方便的軟體用於拍攝證件照🙍‍♂️
 
 #### 自動人臉識別裁切✅ 
@@ -18,3 +17,4 @@
 #### 點擊Load Excel載入學生資料
 ### 載入的資料格式須為:
 ![image](https://github.com/ivan17lai/HeadshotCam-Pro/assets/34911327/48607214-c37a-49ab-b6df-a03b3ff6532c)
+學生資料由第2列開始
