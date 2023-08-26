@@ -8,7 +8,7 @@
 ### Windoes 10/11
 <a href="https://drive.google.com/drive/folders/1cJlOJsc8zKpd9DJmg0tGiuCi3sXTXrx7?usp=sharing" class="button">google雲端硬碟下載</a>
 ## Usage
-#### 點擊Main檔案啟動
+#### 選擇使用筆電或是外接鏡頭點及兩下啟動
 #### 等待幾秒(取決於攝影機啟動速度)
 #### 點擊Load Excel載入學生資料
 ### 載入的資料格式須為:
