@@ -17,4 +17,5 @@
 #### 點擊Load Excel載入學生資料
 ### 載入的資料格式須為:
 ![image](https://github.com/ivan17lai/HeadshotCam-Pro/assets/34911327/48607214-c37a-49ab-b6df-a03b3ff6532c)
-學生資料由第2列開始
+
+#### 學生資料由第2列開始
