@@ -16,5 +16,7 @@
 #### 點擊匯入資料載入學生資料
 ### 載入的資料格式須為:
 ![image](https://github.com/ivan17lai/HeadshotCam-Pro/assets/34911327/48607214-c37a-49ab-b6df-a03b3ff6532c)
-
+#### 範例檔案
+<a href="https://github.com/ivan17lai/HeadshotCam-Pro/blob/main/%E5%AD%B8%E7%94%9F%E8%B3%87%E6%96%99%E7%AF%84%E4%BE%8B%E6%AA%94%E6%A1%88.xlsx
+" class="button">Google 雲端硬碟</a>
 #### 學生資料由第2列開始
