@@ -7,7 +7,7 @@
 ## Download
 ### Windoes 10/11
 <a href="https://drive.google.com/drive/folders/1SrNF2mvflr09VhDJgmYa_jUPFakxd0Tv?usp=drive_link" class="button">Google 雲端硬碟</a>
-## Usage
+## 使用
 #### 點擊 " 輔助證件照裁切系統.exe " 兩下打開啟動器
 #### 從下拉選單選擇你要使用的鏡頭
 #### 等待幾一段時間啟動(取決於攝影機啟動速度)
