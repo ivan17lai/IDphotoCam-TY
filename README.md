@@ -4,7 +4,7 @@
 #### 自動人臉識別裁切✅  根據資料庫命名檔案✅
 
 ## Download
-### Windoes 10/11
+### Windows 10/11
 <a href="https://drive.google.com/drive/folders/1SrNF2mvflr09VhDJgmYa_jUPFakxd0Tv?usp=drive_link" class="button">Google 雲端硬碟</a>
 ## 使用
 #### 點擊 " 輔助證件照裁切系統.exe " 兩下打開啟動器
