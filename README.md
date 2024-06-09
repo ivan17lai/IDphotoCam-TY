@@ -17,7 +17,7 @@
 <a href="https://github.com/ivan17lai/HeadshotCam-Pro/blob/main/%E5%AD%B8%E7%94%9F%E8%B3%87%E6%96%99%E7%AF%84%E4%BE%8B%E6%AA%94%E6%A1%88.xlsx
 " class="button">範例檔案</a>
 ## 儲存
-#### 排設完成後會在程式相同資料夾中建立一個save資料夾
+#### 拍攝完成後會在程式相同資料夾中建立一個save資料夾
 ####  其中包含三個子資料夾
 ####   save
 ####     -- cheak       <存放經裁切並以 班級+座號+姓名 為檔名的照片>
