@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.1/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.0/face_detection.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="column-leftBar">
+
+        <button id="home-page-bt" class="left-round-button-main" style="margin-top: 10%;">
+          <span class="material-icons">
+            home
+          </span>
+        </button>
+
+        <hr style="margin-top: 20%; margin-bottom: 4%; margin-left: 2%; margin-right: 2%;">
+
+        <button id="shot-page-bt" class="left-round-button" style="margin-top: 16%;">
+          <span class="material-icons">
+            photo_camera
+          </span>
+        </button>
+
+        <button id="check-page-bt" class="left-round-button" style="margin-top: 16%;">
+          <span class="material-icons">
+            fact_check
+          </span>
+        </button>
+
+        <button id="rename-page-bt" class="left-round-button" style="margin-top: 16%;">
+          <span class="material-icons">
+            manage_accounts
+          </span>
+        </button>
+
+
+      </div>
+
+      <div class="columns-home" id="home-page" style="display: flex;">
+
+        <div class="app-title">
+          TYCAM 拍照系統
+        </div>
+
+      </div>
+
+      <div class="columns" id="shot-page" style="display: none;">
+      
+
+        <div class="column column-input_video" style="display: none;">
+          <article class="panel is-info">
+            <div class="panel-block">
+              <video class="input_video1"  ></video>
+            </div>
+          </article>
+        </div>
+
+
+        <div class="column-classBar">
+          
+          <div class="classbar-title">
+            <div class="classbar-text">
+              班級
+            </div>
+            <button id="openfile2" class="openfile-samll" style="display: none;">
+              <span class="material-icons" style="font-size: 20px">
+                folder_open
+              </span>
+            </button>
+          </div>
+
+          <button id="openfile" class="openfile-button" style="display: block;">
+            選擇檔案 
+            <span class="material-icons">
+              folder_open
+            </span>
+          </button>
+
+          <input type="file" id="fileInput" style="display: none;">
+          
+          <div class="classbuttom-Bar" id="classbuttom-Bar"></div>
+
+        </div>
+        
+
+        <div class="column-information">
+          <div id="student-list"></div>
+          <div class="student-Bar" id="student-Bar"></div>
+
+
+        </div>
+
+
+        <div class="column-canvas">
+            <div class="camera-view">
+
+              <div class="cap-inf">
+
+                <div class="canvas-block">
+                  <canvas class="output1" width="480" height="480" style="display: block;"></canvas>
+                  
+                  <div class="shoted" id="shoted" style="display: none;">
+                    <div id="capturedImageContainer"></div>
+                    
+                  </div>
+                
+                </div>
+
+                <div class="student-information" id="student-information">
+                  尚未選擇學生
+                </div>
+
+                <div class="micro-set"  style="margin-top: 2%;">
+
+                  <fieldset>
+                    <legend>檔案名稱組合</legend>
+                  
+                    <div>
+                      <input type="checkbox" id="class" name="class" checked />
+                      <label for="class">班級</label>
+                    </div>
+
+                    <div>
+                      <input type="checkbox" id="sid" name="sid" checked />
+                      <label for="sid">學號</label>
+                    </div>
+                  
+                    <div>
+                      <input type="checkbox" id="sitnu" name="sitnu" />
+                      <label for="sitnu">座號</label>
+                    </div>
+
+                    <div>
+                      <input type="checkbox" id="name" name="name" />
+                      <label for="name">姓名</label>
+                    </div>
+
+                    <div>
+                      <input type="checkbox" id="id" name="id" />
+                      <label for="id">身分證</label>
+                    </div>
+                    
+                  </fieldset>
+                  
+                </div>
+      
+              </div>
+
+                <div class="shot-bar" style="margin-left: 5%;">
+                  <button id="captureBtn" class="button is-primary round-button">
+                    <span class="material-icons">
+                      photo_camera
+                    </span>
+                  </button>
+                </div>
+
+                <div class="shoted-bar" style="display: none;">
+                  <button id="reshot" class="button is-primary round-button">
+                    <span class="material-icons">
+                      refresh
+                    </span>
+                  </button>
+
+                  <button id="savephoto" class="button is-primary round-button" style="margin-top: 10%;">
+                    <span class="material-icons">
+                      save
+                    </span>
+                  </button>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+      </div>
+      
+
+    </div>
+    
+    <script type="text/javascript" src="./face.js"></script>
+    <script type="text/javascript" src="./excel_read.js"></script>
+    <script type="text/javascript" src="./randomColor.js"></script>
+    <script type="text/javascript" src="./page_change.js"></script>
+
+    
+  </body>
+</html>

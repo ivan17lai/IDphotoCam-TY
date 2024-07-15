@@ -1,0 +1,351 @@
+:root {
+  --luck-color: #E1F5FE;
+  --luck-color-l2: #B3E5FC;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #F5F5F5;
+  overflow: hidden;
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.columns {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 94%;
+  height: 100%;
+  padding: 0%;
+  margin: 0%;
+}
+
+.columns-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 94%;
+  height: 100%;
+  padding: 0%;
+  margin: 0%;
+}
+
+.column-canvas {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 96%;
+  width: 57%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 1%;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.canvas-block canvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.canvas-block {
+  margin-top: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.column-classBar {
+  height: 96%;
+  width: 18%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 1%;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column-information {
+  height: 96%;
+  width: 23%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 1%;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column-leftBar {
+  height: 96%;
+  width: 3%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 1%;
+  background-color: #F5F5F5;
+}
+
+.camera-view {
+  margin-top: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  border-radius: 15px;
+  background-color: #ffffff;
+}
+
+.round-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--luck-color);
+  transition: background-color 0.3s;
+}
+
+.left-round-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  background-color: #EEEEEE;
+  transition: background-color 0.3s;
+}
+
+.left-round-button .material-icons {
+  font-size: 20px;
+}
+
+.left-round-button:hover {
+  background-color: var(--luck-color);
+}
+
+.left-round-button-main {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--luck-color-l2);
+  transition: background-color 0.3s;
+}
+
+.left-round-button-main .material-icons {
+  font-size: 20px;
+}
+
+.left-round-button-main:hover {
+  background-color: #EEEEEE;
+}
+
+.openfile-samll {
+  width: 40px;
+  height:40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-top: 1%;
+  padding: 0;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--luck-color);
+  transition: background-color 0.3s;
+}
+
+.openfile-samll:hover {
+  background-color: #ECEFF1;
+}
+
+.openfile-button:hover {
+  background-color: #ECEFF1;
+}
+
+.round-button .material-icons {
+  font-size: 24px;
+}
+
+.round-button:hover {
+  background-color: #ECEFF1;
+}
+
+.button-class {
+  width: fill-available;
+  height: 60px;
+  background-color: #FAFAFA;
+  border: none;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  border-radius: 50px;
+  padding: 10px;
+  font-size: 24px;
+  box-sizing: border-box;
+}
+
+.button-class:hover {
+  background-color: #F5F5F5;
+}
+
+.button-student {
+  width: fill-available;
+  height: 60px;
+  background-color: #FAFAFA;
+  border: none;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  border-radius: 50px;
+  padding: 10px;
+  font-size: 24px;
+  box-sizing: border-box;
+}
+
+.button-student:hover {
+  background-color: #F5F5F5;
+}
+
+.openfile-button {
+  margin: 4%;
+  width: 92%;
+  height: 50px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 24px;
+  border: none;
+  background-color: var(--luck-color);
+  transition: background-color 0.3s;
+}
+
+.classbar-title {
+  margin: 6%;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: start;
+  display: flex;
+  flex-direction: row;
+}
+
+.classbuttom-Bar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  max-height: 95%;
+}
+
+.student-Bar {
+  margin: 2%;
+  margin-top: 4%;
+  display: flex;
+  flex-direction: column;
+  width: 96%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  max-height: 95%;
+}
+
+.student-Bar::-webkit-scrollbar {
+  display: none;
+}
+
+.cap-inf {
+  width: 100%;
+  height: 100%;
+}
+
+.student-information {
+  width: 100%;
+  height: 5%;
+  background-color: var(--luck-color);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+
+.shoted {
+  display: flex;
+  flex-direction: row;
+}
+
+.micro-set label {
+  font: 1rem 'Fira Sans', sans-serif;
+}
+
+.micro-set p {
+  font: 1rem 'Fira Sans', sans-serif;
+}
+
+.micro-set input {
+  margin: 0.4rem;
+}
+
+.micro-set fieldset {
+  border: 0;
+  padding: 0;
+  border: blue;
+  display: flex;
+  flex-direction: row;
+}
+
+.shot-page {
+  width: 94%;
+  height: 95%;
+}
