@@ -8,9 +8,14 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.0/face_detection.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 
+    <script src="https://unpkg.com/pdf-lib"></script>
+    <script src="https://unpkg.com/fontkit"></script>
+    
+
     <link rel="stylesheet" href="index.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400&display=swap" rel="stylesheet">
+
 
   </head>
 
@@ -55,6 +60,8 @@
         </div>
 
       </div>
+
+
 
       <div class="columns" id="shot-page" style="display: none;">
       
@@ -189,6 +196,49 @@
 
 
       </div>
+
+
+      <div class="columns-home" id="check-page" style="display: none;">
+
+        <div class="column-checkpage-updatefile">
+
+          <div class="classbar-title">
+            <div class="just-column">
+              <div class="classbar-text">
+                上傳所有照片
+              </div>
+            </div>
+
+            <button id="openfile2-check" class="openfile-samll" style="display: none;">
+              <span class="material-icons" style="font-size: 20px">
+                folder_open
+              </span>
+            </button>
+          </div>
+
+          <button id="openfile-check" class="openfile-button" style="display: block;">
+            選擇檔案 
+            <span class="material-icons">
+              folder_open
+            </span>
+          </button>
+
+          <input type="file" id="fileInput-check" style="display: none;" multiple>
+
+        
+          
+          <div class="classbuttom-Bar" id="buttom-Bar-check">
+
+          </div>
+          
+        </div>
+
+        <div class="column-checkpage">
+
+
+        </div>
+
+      </div>
       
 
     </div>
@@ -197,6 +247,7 @@
     <script type="text/javascript" src="./excel_read.js"></script>
     <script type="text/javascript" src="./randomColor.js"></script>
     <script type="text/javascript" src="./page_change.js"></script>
+    <script type="text/javascript" src="./check_pdf.js"></script>
 
     
   </body>

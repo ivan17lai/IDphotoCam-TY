@@ -349,3 +349,88 @@ html, body {
   width: 94%;
   height: 95%;
 }
+
+
+.column-checkpage {
+  height: 96%;
+  width: 82%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 1%;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column-checkpage-updatefile {
+  height: 96%;
+  width: 18%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 1%;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.bar-text {
+  font-size: 20px;
+  font-weight: semibold;
+  text-align: start;
+  display: flex;
+  flex-direction: row;
+}
+
+
+#photoContainer {
+  width: 210mm;
+  height: 297mm;
+  border: 1px solid #000;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  transform: scale(0.8);  /* 縮小顯示 */
+  align-content: flex-start;  /* 確保所有項目緊靠容器的頂部 */
+
+}
+
+.photo-wrapper {
+  width: 24%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px;
+  margin-bottom: 0;  /* 減少每個圖片容器的下邊距 */
+}
+
+.photo {
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.filename {
+  font-size: 15px;
+  text-align: center;
+  word-wrap: break-word;
+
+}
+
+
+
+.column-checkpage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 96%;
+  width: 82%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 1%;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
