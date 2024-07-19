@@ -1,0 +1,59 @@
+.page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    padding: 50px;
+    box-sizing: border-box;
+    page-break-after: none; /* 确保每页之后断开 */
+    border: 2px solid black; /* 添加黑色边框，宽度为10px */
+}
+.header-container, .footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.header-text, .footer-text {
+    font-size: 18px;
+    text-align: center;
+}
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.image-wrapper {
+    width: calc(25% - 10px); /* 每行显示四张图片 */
+    margin: 5px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.image-wrapper img {
+    max-width: 100%;
+    height: auto;
+}
+.filename {
+    margin-top: 5px;
+    font-size: 12px;
+    word-wrap: break-word;
+}
+
+#pages {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.confirmation-text {
+    padding: 50px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.signature-text {
+    padding: 50px;
+    font-size: 30px;
+    text-align: center;
+}
+
+

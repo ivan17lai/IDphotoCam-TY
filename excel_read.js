@@ -89,17 +89,48 @@ var nowID = '';
     });
   }
 
-  function showStudent(button,student) {
-
+  function showStudent(button, student) {
     var color = window.getComputedStyle(document.getElementById('openfile')).backgroundColor;
     var studentButtons = document.getElementsByClassName('button-student');
     for (var i = 0; i < studentButtons.length; i++) {
       studentButtons[i].style.backgroundColor = '#FAFAFA';
     }
-    
+  
     button.style.backgroundColor = color;
-    document.getElementById('student-information').innerHTML =`${student['班級']}班${student['座號']}號-${student['學生姓名']}`;
+    Json = student;
+    
+    updateFilename();
     nowID = student['證照號碼'];
     reShot();
-    Json = student;
+  }
+
+
+
+  function updateFilename() {
+    const checkboxes = document.querySelectorAll('fieldset input[type="checkbox"]');
+  
+    const checkedIds = Array.from(checkboxes) // Convert NodeList to Array to use filter and map
+      .filter(checkbox => checkbox.checked) // Keep only checked checkboxes
+      .map(checkbox => checkbox.id); // Extract the id of each checked checkbox
+  
+    console.log('Checked checkboxes:', checkedIds);
+  
+    const chchange = ['班級', '學號', '座號', '學生姓名', '證照號碼'];
+    const enname = ['class', 'sid', 'sitnu', 'name', 'id'];
+    const addch = ['班', '', '號', '', ''];
+  
+    let now_filename = '';
+  
+    for (let i = 0; i < checkedIds.length; i++) {
+      for (let j = 0; j < enname.length; j++) {
+        if (checkedIds[i] === enname[j]) {
+          now_filename += Json[chchange[j]] + addch[j] + '-';
+        }
+      }
+    }
+    now_filename = now_filename.slice(0, -1);
+
+    if (document.getElementById('student-information').innerHTML != '尚未選擇學生') {
+      document.getElementById('student-information').innerHTML = now_filename;
+    }
   }

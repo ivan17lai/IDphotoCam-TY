@@ -7,12 +7,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.1/drawing_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.0/face_detection.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
     <script src="https://unpkg.com/pdf-lib"></script>
     <script src="https://unpkg.com/fontkit"></script>
     
 
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pdf_style.css">
+
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400&display=swap" rel="stylesheet">
 
@@ -140,22 +145,22 @@
                     </div>
 
                     <div>
-                      <input type="checkbox" id="sid" name="sid" checked />
+                      <input type="checkbox" id="sid" name="sid"  />
                       <label for="sid">學號</label>
                     </div>
                   
                     <div>
-                      <input type="checkbox" id="sitnu" name="sitnu" />
+                      <input type="checkbox" id="sitnu" name="sitnu" checked/>
                       <label for="sitnu">座號</label>
                     </div>
 
                     <div>
-                      <input type="checkbox" id="name" name="name" />
+                      <input type="checkbox" id="name" name="name" checked/>
                       <label for="name">姓名</label>
                     </div>
 
                     <div>
-                      <input type="checkbox" id="id" name="id" />
+                      <input type="checkbox" id="id" name="id" checked />
                       <label for="id">身分證</label>
                     </div>
                     
@@ -223,6 +228,10 @@
             </span>
           </button>
 
+
+          
+
+
           <input type="file" id="fileInput-check" style="display: none;" multiple>
 
         
@@ -233,14 +242,48 @@
           
         </div>
 
-        <div class="column-checkpage">
+        <div class="column-checkpage" style="padding: 1%;">
+
+
+
+          <div class="column-buttom" style="display: flex; flex-direction: column;">
+          
+            <button id="download-pdf" class="button is-primary round-button-download" style="margin-top: 10%;">
+            
+              <span class="material-icons">
+                download
+              </span>
+          
+            </button>
+  
+            <button id="print-pdf" class="button is-primary round-button-download" style="margin-top: 10%;">
+              
+              <span class="material-icons">
+                print
+              </span>
+          
+            </button>
+          
+          </div>
+          
+
+
+          <div class="pdf-view">
+          
+            <div id="pages"></div>
+          
+          </div>
 
 
         </div>
 
       </div>
-      
 
+
+      <!-- 偷偷放個乖乖 拜託不要出BUG 我已經快忘記我之前在寫甚麼了 -->
+      <img src="https://www.kuai.com.tw/uploads/product/tw/%E4%B9%96%E4%B9%96%E7%8E%89%E7%B1%B3%E8%84%86%E6%A2%9D_%E5%A5%B6%E6%B2%B9%E6%A4%B0%E5%AD%90.webp" style="display: none;">
+      
+      
     </div>
     
     <script type="text/javascript" src="./face.js"></script>
@@ -249,6 +292,8 @@
     <script type="text/javascript" src="./page_change.js"></script>
     <script type="text/javascript" src="./check_pdf.js"></script>
 
+
     
   </body>
 </html>
+

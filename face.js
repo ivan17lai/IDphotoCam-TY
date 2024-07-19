@@ -118,6 +118,7 @@ reshot.addEventListener('click', () => {
 savephoto.addEventListener('click', () => {
   const img = capturedImageContainer.querySelector('img');
   if (img) {
+    now_filename = document.getElementById('student-information').innerHTML;
     const a = document.createElement('a');
     a.href = img.src;
     a.download = now_filename + '.png';

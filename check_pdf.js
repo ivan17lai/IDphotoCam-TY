@@ -9,13 +9,11 @@ document.getElementById('openfile2-check').addEventListener('click', function() 
 document.getElementById('fileInput-check').addEventListener('change', async function() {
     document.getElementById('openfile-check').style.display = 'none';
     document.getElementById('openfile2-check').style.display = 'block';
+    document.getElementById('download-pdf').style.display = 'block';
+    document.getElementById('print-pdf').style.display = 'block';
 
     const files = this.files;
-    const pdfDoc = await PDFLib.PDFDocument.create();
-    const pageWidth = PDFLib.PageSizes.A4[0];
-    const pageHeight = PDFLib.PageSizes.A4[1];
-    const imageWidth = pageWidth / 4 - 10; // Add margin
-    const imageHeight = pageHeight / 5 - 10; // Add margin
+    const classGroups = {};
 
     // Read all files as data URLs
     const fileReaders = [];
@@ -31,91 +29,111 @@ document.getElementById('fileInput-check').addEventListener('change', async func
     // Wait for all file readers to complete
     const imageInfos = await Promise.all(fileReaders);
 
-    // Create a canvas to draw text
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const scaleFactor = 2; // Increase for higher resolution text
-    canvas.width = imageWidth * scaleFactor;
-    canvas.height = 40 * scaleFactor; // Adjust height as needed
-
-    // Embed images and add them to PDF
-    for (let i = 0; i < imageInfos.length; i += 16) { // Process 16 images per page
-        const page = pdfDoc.addPage([pageWidth, pageHeight]);
-        for (let j = 0; j < 16 && i + j < imageInfos.length; j++) {
-            const { result, type, name } = imageInfos[i + j];
-            const img = new Image();
-            img.src = result;
-            await new Promise((resolve) => img.onload = resolve);
-            const imageBytes = await fetch(result).then(res => res.arrayBuffer());
-            let embeddedImage;
-            if (type === 'image/png') {
-                embeddedImage = await pdfDoc.embedPng(imageBytes);
-            } else if (type === 'image/jpeg') {
-                embeddedImage = await pdfDoc.embedJpg(imageBytes);
-            } else {
-                continue; // Skip unsupported image types
+    // Group images by class
+    for (const { result, type, name } of imageInfos) {
+        const classMatch = name.match(/(\d+)班/);
+        if (classMatch) {
+            const className = parseInt(classMatch[1]) + '班';
+            if (!classGroups[className]) {
+                classGroups[className] = [];
             }
-            const x = (j % 4) * (imageWidth + 10); // Add margin
-            const y = pageHeight - Math.floor(j / 4 + 1) * (imageHeight + 40); // Add margin and space for text
-            page.drawImage(embeddedImage, {
-                x: x,
-                y: y,
-                width: imageWidth,
-                height: imageHeight,
-            });
-
-            // Draw the filename onto the canvas
-            const filename = name.substring(0, name.lastIndexOf('.'));
-            const segments = filename.split('-');
-            let lines = [];
-            let currentLine = '';
-
-            // Add the segments to lines
-            for (let k = 0; k < segments.length; k++) {
-                if (k > 0) {
-                    currentLine += '-';
-                }
-                currentLine += segments[k];
-                if (k >= 2) {
-                    lines.push(currentLine);
-                    currentLine = '';
-                }
-            }
-            if (currentLine) {
-                lines.push(currentLine);
-            }
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'black';
-            ctx.font = `${12 * scaleFactor}px Arial`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-
-            // Draw the wrapped text
-            lines.forEach((line, index) => {
-                ctx.fillText(line, canvas.width / 2, canvas.height / 2 + (index - lines.length / 2 + 0.5) * 20);
-            });
-
-            // Convert the canvas to a data URL
-            const textDataUrl = canvas.toDataURL('image/png');
-            const textImageBytes = await fetch(textDataUrl).then(res => res.arrayBuffer());
-            const textEmbeddedImage = await pdfDoc.embedPng(textImageBytes);
-
-            // Add the text image below the original image
-            page.drawImage(textEmbeddedImage, {
-                x: x,
-                y: y - 30, // Position text image below the original image
-                width: imageWidth,
-                height: 30, // Adjust height as needed
-            });
+            classGroups[className].push({ result, type, name });
         }
     }
 
-    // Generate PDF and trigger download
-    const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'images.pdf';
-    link.click();
+    // Sort classGroups by class name
+    const sortedClasses = Object.keys(classGroups).sort((a, b) => {
+        const aNum = parseInt(a);
+        const bNum = parseInt(b);
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+            return aNum - bNum;
+        } else if (!isNaN(aNum)) {
+            return -1;
+        } else if (!isNaN(bNum)) {
+            return 1;
+        } else {
+            return a.localeCompare(b);
+        }
+    });
+
+    const pagesContainer = document.getElementById('pages');
+    pagesContainer.innerHTML = '';
+
+    // Create pages and add images to them
+    sortedClasses.forEach(className => {
+        const classImages = classGroups[className];
+        const imagesPerPage = 12; // 減少一行，顯示12張圖片（3行4列）
+
+        for (let i = 0; i < classImages.length; i += imagesPerPage) { // Process 12 images per page
+            const page = document.createElement('div');
+            page.className = 'page';
+
+            // Add the confirmation text at the beginning of each class
+            if (i === 0) {
+                const confirmationDiv = document.createElement('div');
+                confirmationDiv.className = 'confirmation-text';
+                confirmationDiv.innerHTML = `證件照之個人資料確認單 - ${className}`;
+                page.appendChild(confirmationDiv);
+            }
+
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'image-container';
+            for (let j = 0; j < imagesPerPage && i + j < classImages.length; j++) {
+                const { result, name } = classImages[i + j];
+                const wrapper = document.createElement('div');
+                wrapper.className = 'image-wrapper';
+                const img = document.createElement('img');
+                img.src = result;
+                const filename = document.createElement('div');
+                filename.className = 'filename';
+                filename.textContent = name.substring(0, name.lastIndexOf('.'));
+                wrapper.appendChild(img);
+                wrapper.appendChild(filename);
+                imageContainer.appendChild(wrapper);
+            }
+            page.appendChild(imageContainer);
+
+            // Add the signature text at the end of each class
+            if (i + imagesPerPage >= classImages.length) {
+                const signatureDiv = document.createElement('div');
+                signatureDiv.className = 'signature-text';
+                signatureDiv.innerHTML = `確認照片與個人資料相符後在此處簽名________________`;
+                page.appendChild(signatureDiv);
+            }
+
+            pagesContainer.appendChild(page);
+        }
+    });
 });
+
+document.getElementById('download-pdf').addEventListener('click', function() {
+    generatePDF(false);
+});
+document.getElementById('print-pdf').addEventListener('click', function() {
+    generatePDF(true);
+});
+
+function generatePDF(isPrint) {
+    const element = document.getElementById('pages');
+    const opt = {
+        margin: [0, 0, 0, 0],
+        filename: 'class_images.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setPage(i);
+            pdf.setFontSize(10);
+            pdf.text(String(i) + '/' + String(totalPages), pdf.internal.pageSize.getWidth() - 20, pdf.internal.pageSize.getHeight() - 10);
+        }
+        if (isPrint) {
+            pdf.autoPrint();
+            window.open(pdf.output('bloburl'), '_blank');
+        } else {
+            pdf.save();
+        }
+    });
+}
