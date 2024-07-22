@@ -467,3 +467,42 @@ html, body {
   overflow: auto; /* 確保內容超出時可以滾動 */
   position: relative; /* 確保相對定位 */
 }
+
+
+
+.app-title {
+  margin: 3%;
+  font-size: 40px;
+  height: 20%;
+}
+
+.teach-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+
+.teach-block {
+  width: 33%;
+  height: 60%;
+  margin: 20px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.teach-title {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: start;
+}
+
+.teach-text {
+  font-size: 25px;
+  text-align: start;
+}

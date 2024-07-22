@@ -53,7 +53,7 @@ function onResultsFace(results) {
 
     // 設定4:3的比例
     const boxHeight = faceWidth*2.5;
-    const boxWidth = (boxHeight * 3) / 4;
+    const boxWidth = (boxHeight * 3) / 3.6;
 
     // 計算矩形框的左上角座標
     const startX = centerX - (boxWidth / 2);
