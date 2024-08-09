@@ -124,11 +124,11 @@ var nowID = '';
     for (let i = 0; i < checkedIds.length; i++) {
       for (let j = 0; j < enname.length; j++) {
         if (checkedIds[i] === enname[j]) {
-          now_filename += Json[chchange[j]] + addch[j] + '-';
+          now_filename += Json[chchange[j]] + addch[j] + '--';
         }
       }
     }
-    now_filename = now_filename.slice(0, -1);
+    now_filename = now_filename.slice(0, -2);
 
     if (document.getElementById('student-information').innerHTML != '尚未選擇學生') {
       document.getElementById('student-information').innerHTML = now_filename;

@@ -52,9 +52,10 @@ document.getElementById('fileInput-check').addEventListener('change', async func
         } else if (!isNaN(bNum)) {
             return 1;
         } else {
-            return a.localeCompare(b);
+            return 0; // 對於非數字班級，不改變順序
         }
     });
+
 
     const pagesContainer = document.getElementById('pages');
     pagesContainer.innerHTML = '';
