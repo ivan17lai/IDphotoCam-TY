@@ -112,7 +112,7 @@ function showClassStudents(classCode, button) {
 
   studentList.forEach(function(student) {
       var button = document.createElement('button');
-      var studentName = `${student['學號']}-${student['學生姓名']}`;
+      var studentName = `${student['座號']}-${student['學生姓名']}`;
       
       // 檢查是否已保存到 cookies
       if (getCookie(student['證照號碼'])) {
@@ -170,7 +170,7 @@ function updateFilename() {
   let now_filename = '';
 
   for (let i = 0; i < checkedIds.length; i++) {
-    for (let j = 0; j < enname.length; j++) {
+    for (let j = 0; j < enname.length-1; j++) {
       if (checkedIds[i] === enname[j]) {
         now_filename += Json[chchange[j]] + addch[j] + '--';
       }

@@ -56,7 +56,6 @@ document.getElementById('fileInput-check').addEventListener('change', async func
         }
     });
 
-
     const pagesContainer = document.getElementById('pages');
     pagesContainer.innerHTML = '';
 
@@ -81,13 +80,18 @@ document.getElementById('fileInput-check').addEventListener('change', async func
             imageContainer.className = 'image-container';
             for (let j = 0; j < imagesPerPage && i + j < classImages.length; j++) {
                 const { result, name } = classImages[i + j];
+
+                // 隱藏身分證號碼部分
+                let displayName = name.replace(/[A-Z]\d{9}/, ''); // 去掉一位英文+九位數字的部分
+                displayName = displayName.trim(); // 去掉可能的前後空白
+
                 const wrapper = document.createElement('div');
                 wrapper.className = 'image-wrapper';
                 const img = document.createElement('img');
                 img.src = result;
                 const filename = document.createElement('div');
                 filename.className = 'filename';
-                filename.textContent = name.substring(0, name.lastIndexOf('.'));
+                filename.textContent = displayName.substring(0, displayName.lastIndexOf('.'));
                 wrapper.appendChild(img);
                 wrapper.appendChild(filename);
                 imageContainer.appendChild(wrapper);

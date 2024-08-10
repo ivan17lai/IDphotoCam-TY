@@ -130,7 +130,7 @@ savephoto.addEventListener('click', () => {
       now_filename = document.getElementById('student-information').innerHTML;
       const a = document.createElement('a');
       a.href = img.src;
-      a.download = now_filename + '.png';
+      a.download = now_filename + "--" + nowID.toString() +'.png';
       document.body.appendChild(a); // 必須將 <a> 元素附加到文檔中，才能觸發點擊事件
       a.click();
       document.body.removeChild(a); // 點擊後移除 <a> 元素
@@ -177,9 +177,9 @@ function handleChange(event) {
     now_filename = '';
 
     for (let i = 0; i < checkedIds.length; i++) {
-        for (let j = 0; j < enname.length; j++) {
+        for (let j = 0; j < enname.length-1; j++) {
             if (checkedIds[i] === enname[j]) {
-                now_filename += Json[chchange[j]] + addch[j] + '-';
+                now_filename += Json[chchange[j]] + addch[j] + '--';
             }
         }
     }
