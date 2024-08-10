@@ -44,15 +44,18 @@ document.getElementById('fileInput-check').addEventListener('change', async func
     // Wait for all file readers to complete
     const imageInfos = await Promise.all(fileReaders);
 
-    // Group images by class
+    // Group images by class and sort by seat number
     for (const { result, type, name } of imageInfos) {
         const classMatch = name.match(/(\d+)班/);
+        const seatMatch = name.match(/--(\d+)號/);
+        const seatNumber = seatMatch ? parseInt(seatMatch[1]) : 0;
+
         if (classMatch) {
             const className = parseInt(classMatch[1]) + '班';
             if (!classGroups[className]) {
                 classGroups[className] = [];
             }
-            classGroups[className].push({ result, type, name });
+            classGroups[className].push({ result, type, name, seatNumber });
         }
     }
 
@@ -61,13 +64,13 @@ document.getElementById('fileInput-check').addEventListener('change', async func
         const aNum = parseInt(a);
         const bNum = parseInt(b);
         if (!isNaN(aNum) && !isNaN(bNum)) {
-            return aNum - bNum;
+            return aNum - bNum; // 正序排序
         } else if (!isNaN(aNum)) {
             return -1;
         } else if (!isNaN(bNum)) {
             return 1;
         } else {
-            return 0; // 對於非數字班級，不改變順序
+            return 0; // 对于非数字班级，不改变顺序
         }
     });
 
@@ -77,9 +80,15 @@ document.getElementById('fileInput-check').addEventListener('change', async func
     // Create pages and add images to them
     sortedClasses.forEach(className => {
         const classImages = classGroups[className];
-        const imagesPerPage = 30; // 減少一行，顯示12張圖片（3行4列）
 
-        for (let i = 0; i < classImages.length; i += imagesPerPage) { // Process 12 images per page
+        // Sort images within the class by seat number
+        classImages.sort((a, b) => a.seatNumber - b.seatNumber);
+        //反轉座號排序
+        classImages.reverse();
+
+        const imagesPerPage = 35; // 每页显示35张图片
+
+        for (let i = 0; i < classImages.length; i += imagesPerPage) { // Process images per page
             const page = document.createElement('div');
             page.className = 'page';
 
