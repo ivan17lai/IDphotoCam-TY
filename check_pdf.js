@@ -84,7 +84,7 @@ document.getElementById('fileInput-check').addEventListener('change', async func
         // Sort images within the class by seat number
         classImages.sort((a, b) => a.seatNumber - b.seatNumber);
         //反轉座號排序
-        classImages.reverse();
+        // classImages.reverse();
 
         const imagesPerPage = 35; // 每页显示35张图片
 
