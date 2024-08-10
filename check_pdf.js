@@ -62,7 +62,7 @@ document.getElementById('fileInput-check').addEventListener('change', async func
     // Create pages and add images to them
     sortedClasses.forEach(className => {
         const classImages = classGroups[className];
-        const imagesPerPage = 12; // 減少一行，顯示12張圖片（3行4列）
+        const imagesPerPage = 30; // 減少一行，顯示12張圖片（3行4列）
 
         for (let i = 0; i < classImages.length; i += imagesPerPage) { // Process 12 images per page
             const page = document.createElement('div');

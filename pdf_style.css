@@ -14,7 +14,7 @@
     height: 100%;
 }
 .header-text, .footer-text {
-    font-size: 18px;
+    font-size: 12px;
     text-align: center;
 }
 .image-container {
@@ -23,7 +23,7 @@
     justify-content: space-between;
 }
 .image-wrapper {
-    width: calc(25% - 10px); /* 每行显示四张图片 */
+    width: calc(15% - 10px); /* 每行显示四张图片 */
     margin: 5px;
     text-align: center;
     box-sizing: border-box;
@@ -45,14 +45,14 @@
 }
 
 .confirmation-text {
-    padding: 50px;
+    padding: 20px;
     font-size: 30px;
     text-align: center;
 }
 
 .signature-text {
-    padding: 50px;
-    font-size: 30px;
+    padding: 20px;
+    font-size: 20px;
     text-align: center;
 }
 
