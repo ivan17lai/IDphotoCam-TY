@@ -143,7 +143,7 @@ savephoto.addEventListener('click', () => {
 
       // 在學生列表中顯示 "(已拍攝)"
       var studentButton = document.getElementById(nowID);
-      if (studentButton) {
+      if (studentButton && !studentButton.innerHTML.includes('(已拍攝)')) {
           studentButton.innerHTML += " (已拍攝)";
       }
   } else {

@@ -14,10 +14,25 @@ document.getElementById('fileInput-check').addEventListener('change', async func
 
     const files = this.files;
     const classGroups = {};
+    const idGroups = {};
 
-    // Read all files as data URLs
-    const fileReaders = [];
+    // Group files by ID and keep the latest file based on lastModified time
     for (const file of files) {
+        const idMatch = file.name.match(/[A-Z]\d{9}/);
+        if (idMatch) {
+            const id = idMatch[0];
+            if (!idGroups[id] || file.lastModified > idGroups[id].lastModified) {
+                idGroups[id] = file; // Store the latest file for this ID
+            }
+        } else {
+            idGroups[file.name] = file; // Store the file if no ID is found
+        }
+    }
+
+    // Convert grouped files to data URLs
+    const fileReaders = [];
+    for (const id in idGroups) {
+        const file = idGroups[id];
         const reader = new FileReader();
         const promise = new Promise((resolve) => {
             reader.onload = () => resolve({ result: reader.result, type: file.type, name: file.name });
