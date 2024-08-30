@@ -224,41 +224,69 @@ const id = params.get('id');
 console.log(id);
 
 
+let currentStream = null;
+const videoContainer = document.getElementById('videoContainer');
+
+
+// 動態生成攝影機的 <video> 標籤
+function createVideoElement(deviceId, index) {
+  const videoElement = document.createElement('video');
+  videoElement.className = `input_video${index}`;
+  videoElement.setAttribute('data-device-id', deviceId);
+  videoElement.autoplay = true;
+  videoElement.style.width = '480px'; // 設定寬度
+  videoElement.style.height = '360px'; // 設定高度
+  videoElement.style.border = '1px solid black'; // 加上邊框
+  videoContainer.appendChild(videoElement);
+}
+
+// 停止目前的攝影機流
+function stopCurrentStream() {
+  if (currentStream) {
+    currentStream.getTracks().forEach(track => track.stop());
+  }
+}
+
+// 選擇指定攝影機並將其串流顯示在對應的 <video> 標籤中
+function selectCamera(deviceId) {
+  stopCurrentStream();
+
+  navigator.mediaDevices.getUserMedia({
+    video: {
+      deviceId: { exact: deviceId }
+    }
+  })
+  .then(stream => {
+    currentStream = stream;
+    
+    // 找到對應的 <video> 元素並顯示影像
+    const videoElement = document.querySelector(`video[data-device-id="${deviceId}"]`);
+    if (videoElement) {
+      videoElement.srcObject = stream;
+    }
+  })
+  .catch(err => {
+    console.error('發生錯誤：', err);
+  });
+}
+
+// 偵測可用攝影機並動態生成 <video> 元素
 navigator.mediaDevices.enumerateDevices()
   .then(devices => {
     const videoDevices = devices.filter(device => device.kind === 'videoinput');
 
-    if (videoDevices.length === 0) {
-      console.error('找不到攝像頭');
-      return;
+    if (videoDevices.length > id) {
+      // 動態生成 <video> 元素
+      createVideoElement(videoDevices[id].deviceId, id);
+
+      // 選擇對應的攝影機
+      selectCamera(videoDevices[id].deviceId);
+    } else {
+      console.error(`找不到 id 為 ${id} 的攝影機`);
     }
-
-    // 假設選擇第一個攝像頭作為預設攝像頭
-    const selectedCameraId = videoDevices[0].deviceId;
-
-    // 使用 getUserMedia 並指定 deviceId
-    return navigator.mediaDevices.getUserMedia({
-      video: {
-        deviceId: { exact: selectedCameraId } // 指定選擇的攝像頭
-      }
-    });
-  })
-  .then(stream => {
-    // 將影像流放入 video1 標籤
-    video1.srcObject = stream;
-
-    const camera = new Camera(video1, {
-      onFrame: async () => {
-        await faceDetection.send({ image: video1 });
-      },
-      width: 480,
-      height: 480,
-    });
-
-    camera.start(); 
   })
   .catch(err => {
-    console.error('發生錯誤：', err);
+    console.error('無法獲取設備：', err);
   });
 
 
