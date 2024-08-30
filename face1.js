@@ -223,6 +223,8 @@ const id = params.get('id');
 console.log(id);
 
 
+let currentStream = null; // 儲存當前的影像流
+
 navigator.mediaDevices.enumerateDevices()
   .then(devices => {
     const videoDevices = devices.filter(device => device.kind === 'videoinput');
@@ -232,19 +234,25 @@ navigator.mediaDevices.enumerateDevices()
       return;
     }
 
-    // 假設選擇第一個攝像頭作為預設攝像頭
+    // 確保選擇正確的攝影機
     const selectedCameraId = videoDevices[id].deviceId;
+
+    // 停止先前的影像流，防止兩個攝影機同時開啟
+    if (currentStream) {
+      currentStream.getTracks().forEach(track => track.stop());
+    }
 
     // 使用 getUserMedia 並指定 deviceId
     return navigator.mediaDevices.getUserMedia({
       video: {
-        deviceId: { exact: selectedCameraId } // 指定選擇的攝像頭
+        deviceId: { exact: selectedCameraId } // 指定選擇的攝影機
       }
     });
   })
   .then(stream => {
-    const tracks = stream.getTracks();
-    tracks.forEach(track => track.stop());
+    // 更新 currentStream，儲存當前的影像流
+    currentStream = stream;
+
     // 將影像流放入 video1 標籤
     video1.srcObject = stream;
 
@@ -256,7 +264,7 @@ navigator.mediaDevices.enumerateDevices()
       height: 480,
     });
 
-    camera.start(); 
+    camera.start();
   })
   .catch(err => {
     console.error('發生錯誤：', err);
