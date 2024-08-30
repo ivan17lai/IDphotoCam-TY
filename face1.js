@@ -209,6 +209,18 @@ const faceDetection = new FaceDetection({ locateFile: (file) => {
 
 faceDetection.onResults(onResultsFace);
 
+// 獲取當前頁面的 URL
+const url = new URL(window.location.href);
+
+// 使用 URLSearchParams 來讀取查詢參數
+const params = new URLSearchParams(url.search);
+
+// 獲取 id 參數的值
+const id = params.get('id');
+
+// 輸出 id 的值
+console.log(id);
+
 
 navigator.mediaDevices.getUserMedia({ video: true })
         .then(() => {
@@ -226,7 +238,7 @@ navigator.mediaDevices.getUserMedia({ video: true })
             },
             width: 480,
             height: 480,
-            cameraId: devices[0].deviceId,
+            cameraId: devices[id].deviceId,
         });
         camera.start(); 
 
