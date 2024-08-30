@@ -1,5 +1,4 @@
 const video1 = document.getElementsByClassName('input_video1')[0];
-const video2 = document.getElementsByClassName('input_video2')[0];
 
 const out1 = document.getElementsByClassName('output1')[0];
 const canvasCtx1 = out1.getContext('2d');
@@ -244,6 +243,8 @@ navigator.mediaDevices.enumerateDevices()
     });
   })
   .then(stream => {
+    const tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
     // 將影像流放入 video1 標籤
     video1.srcObject = stream;
 
