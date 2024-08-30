@@ -210,14 +210,17 @@ const faceDetection = new FaceDetection({ locateFile: (file) => {
 faceDetection.onResults(onResultsFace);
 
 
-navigator.mediaDevices.enumerateDevices()
-  .then(devices => {
-    devices.forEach(device => {
-      if (device.kind === 'videoinput') {
-        console.log(device.label, device.deviceId);
-      }
-    });
-  });
+navigator.mediaDevices.getUserMedia({ video: true })
+        .then(() => {
+          return navigator.mediaDevices.enumerateDevices();
+        })
+        .then(devices => {
+          const deviceList = devices.map(device => 
+            `${device.kind}: ${device.label || 'No label'} (ID: ${device.deviceId})`
+          ).join('\n');
+          console.log(deviceList);
+
+        })
 
 
 const camera = new Camera(video1, {
