@@ -233,6 +233,7 @@ navigator.mediaDevices.getUserMedia({ video: true })
 
             const videoDevices = devices.filter(device => device.kind === 'videoinput');
             console.log(videoDevices);
+            console.log(videoDevices[id].deviceId);
 
           const camera = new Camera(video1, {
             onFrame: async () => {
