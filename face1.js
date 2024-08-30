@@ -230,9 +230,9 @@ navigator.mediaDevices.getUserMedia({ video: true })
           const deviceList = devices.map(device => 
             `${device.kind}: ${device.label || 'No label'} (ID: ${device.deviceId})`
           ).join('\n');
-          console.log(deviceList);
 
             const videoDevices = devices.filter(device => device.kind === 'videoinput');
+            console.log(videoDevices);
 
           const camera = new Camera(video1, {
             onFrame: async () => {
