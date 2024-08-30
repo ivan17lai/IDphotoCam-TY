@@ -209,6 +209,12 @@ const faceDetection = new FaceDetection({ locateFile: (file) => {
 
 faceDetection.onResults(onResultsFace);
 
+
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
 // 取得所有裝置
 navigator.mediaDevices.enumerateDevices().then(devices => {
     // 找到所有的攝像頭裝置
@@ -217,7 +223,8 @@ navigator.mediaDevices.enumerateDevices().then(devices => {
     // 確保有至少一個攝像頭
     if (videoDevices.length > 0) {
         // 取得第一個或第二個攝像頭的 deviceId
-        const cameraId = videoDevices.length > 1 ? videoDevices[1].deviceId : videoDevices[0].deviceId;
+        const deviceIdFromUrl = getUrlParameter('id');
+        const cameraId = videoDevices[deviceIdFromUrl].deviceId;
         
         // 使用選擇的攝像頭初始化 Camera 實例
         const camera = new Camera(video1, {
