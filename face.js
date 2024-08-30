@@ -230,35 +230,66 @@ navigator.mediaDevices.enumerateDevices().then(devices => {
     // 找到所有的攝像頭裝置
     const videoDevices = devices.filter(device => device.kind === 'videoinput');
     
-    // 確保有至少一個攝像頭
-    if (videoDevices.length > 0) {
-        // 取得第一個或第二個攝像頭的 deviceId
-        const cameraId = videoDevices.length > 1 ? videoDevices[1].deviceId : videoDevices[0].deviceId;
+//     // 確保有至少一個攝像頭
+//     if (videoDevices.length > 0) {
+//         // 取得第一個或第二個攝像頭的 deviceId
+//         const cameraId = videoDevices.length > 1 ? videoDevices[1].deviceId : videoDevices[0].deviceId;
         
-        if (videoDevices.length > 1) {
-            console.log('找到多個攝像頭，使用第二個攝像頭:', videoDevices[1]);
-        } else {
-            console.log('找到一個攝像頭，使用第一個攝像頭:', videoDevices[0]);
+//         if (videoDevices.length > 1) {
+//             console.log('找到多個攝像頭，使用第二個攝像頭:', videoDevices[1]);
+//         } else {
+//             console.log('找到一個攝像頭，使用第一個攝像頭:', videoDevices[0]);
+//         }
+
+//         // 使用選擇的攝像頭初始化 Camera 實例
+//         const camera = new Camera(video1, {
+//             onFrame: async () => {
+//                 await faceDetection.send({ image: video1 });
+//             },
+//             width: 480,
+//             height: 480,
+//             deviceId: cameraId // 設定要使用的攝像頭
+//         });
+        
+//         camera.start();
+//     } else {
+//         console.error('沒有找到攝像頭');
+//     }
+// }).catch(error => {
+//     console.error('獲取裝置失敗:', error);
+// });
+
+document.getElementById('listDevices').addEventListener('click', () => {
+    // 請求媒體設備權限
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(() => {
+        return navigator.mediaDevices.enumerateDevices();
+      })
+      .then(devices => {
+        const deviceList = devices.map(device => 
+          `${device.kind}: ${device.label || 'No label'} (ID: ${device.deviceId})`
+        ).join('\n');
+        document.getElementById('deviceList').textContent = deviceList;
+        console.log( deviceList);
+
+        // 顯示第一個可用的攝影機
+        const videoDevices = devices.filter(device => device.kind === 'videoinput');
+        if (videoDevices.length > 0) {
+          const constraints = {
+            video: { deviceId: videoDevices[0].deviceId }
+          };
+          return navigator.mediaDevices.getUserMedia(constraints);
         }
-
-        // 使用選擇的攝像頭初始化 Camera 實例
-        const camera = new Camera(video1, {
-            onFrame: async () => {
-                await faceDetection.send({ image: video1 });
-            },
-            width: 480,
-            height: 480,
-            deviceId: cameraId // 設定要使用的攝像頭
-        });
-        
-        camera.start();
-    } else {
-        console.error('沒有找到攝像頭');
-    }
-}).catch(error => {
-    console.error('獲取裝置失敗:', error);
+      })
+      .then(stream => {
+        const video = document.getElementById('webcam-output');
+        video.srcObject = stream;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
 });
-
 
 
 window.addEventListener('resize', adjustCanvasSize);
