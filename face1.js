@@ -1,4 +1,6 @@
 const video1 = document.getElementsByClassName('input_video1')[0];
+const video2 = document.getElementsByClassName('input_video2')[0];
+
 const out1 = document.getElementsByClassName('output1')[0];
 const canvasCtx1 = out1.getContext('2d');
 const captureBtn = document.getElementById('captureBtn');
@@ -232,7 +234,7 @@ navigator.mediaDevices.enumerateDevices()
     }
 
     // 假設選擇第一個攝像頭作為預設攝像頭
-    const selectedCameraId = videoDevices[0].deviceId;
+    const selectedCameraId = videoDevices[id].deviceId;
 
     // 使用 getUserMedia 並指定 deviceId
     return navigator.mediaDevices.getUserMedia({
