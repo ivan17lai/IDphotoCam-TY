@@ -232,13 +232,15 @@ navigator.mediaDevices.getUserMedia({ video: true })
           ).join('\n');
           console.log(deviceList);
 
+            const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
           const camera = new Camera(video1, {
             onFrame: async () => {
                 await faceDetection.send({ image: video1 });
             },
             width: 480,
             height: 480,
-            cameraId: devices[id].deviceId,
+            cameraId: videoDevices[id].deviceId,
         });
         camera.start(); 
 
