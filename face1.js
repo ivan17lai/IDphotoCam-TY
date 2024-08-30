@@ -227,6 +227,10 @@ console.log(id);
 navigator.mediaDevices.enumerateDevices()
   .then(devices => {
     const videoDevices = devices.filter(device => device.kind === 'videoinput');
+    console.log(videoDevices);
+
+
+
 
     if (videoDevices.length === 0) {
       console.error('找不到攝像頭');
@@ -234,7 +238,7 @@ navigator.mediaDevices.enumerateDevices()
     }
 
     // 假設選擇第一個攝像頭作為預設攝像頭
-    const selectedCameraId = videoDevices[0].deviceId;
+    const selectedCameraId = videoDevices[id].deviceId;
 
     // 使用 getUserMedia 並指定 deviceId
     return navigator.mediaDevices.getUserMedia({
