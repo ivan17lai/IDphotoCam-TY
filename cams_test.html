@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device List Test</title>
+</head>
+<body>
+  <h1>設備列表測試</h1>
+  <button id="listDevices">列出所有設備</button>
+  <pre id="deviceList"></pre>
+  <video id="webcam-output" width="640" height="480" autoplay></video>
+
+  <script>
+    document.getElementById('listDevices').addEventListener('click', () => {
+      // 請求媒體設備權限
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(() => {
+          return navigator.mediaDevices.enumerateDevices();
+        })
+        .then(devices => {
+          const deviceList = devices.map(device => 
+            `${device.kind}: ${device.label || 'No label'} (ID: ${device.deviceId})`
+          ).join('\n');
+          document.getElementById('deviceList').textContent = deviceList;
+
+          // 顯示第一個可用的攝影機
+          const videoDevices = devices.filter(device => device.kind === 'videoinput');
+          if (videoDevices.length > 0) {
+            const constraints = {
+              video: { deviceId: videoDevices[0].deviceId }
+            };
+            return navigator.mediaDevices.getUserMedia(constraints);
+          }
+        })
+        .then(stream => {
+          const video = document.getElementById('webcam-output');
+          video.srcObject = stream;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+  </script>
+</body>
+</html>

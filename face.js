@@ -209,17 +209,38 @@ const faceDetection = new FaceDetection({ locateFile: (file) => {
 
 faceDetection.onResults(onResultsFace);
 
+navigator.mediaDevices.enumerateDevices()
+  .then(devices => {
+    const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+    // 將所有設備資訊輸出到 console
+    console.log('所有可用設備：', videoDevices);
+
+    // 如果要輸出到自定義的 log 檔案，可以使用以下方式：
+    const logData = JSON.stringify(videoDevices, null, 2); // 格式化 JSON 資料
+    const fs = require('fs'); // 如果在 Node.js 環境中，需要引入 fs 模組
+    fs.writeFileSync('device_log.txt', logData);
+  })
+  .catch(error => {
+    console.error('獲取裝置失敗:', error);
+  });
+
 // 取得所有裝置
 navigator.mediaDevices.enumerateDevices().then(devices => {
     // 找到所有的攝像頭裝置
     const videoDevices = devices.filter(device => device.kind === 'videoinput');
-    console.log('所有裝置:', devices);
     
     // 確保有至少一個攝像頭
     if (videoDevices.length > 0) {
         // 取得第一個或第二個攝像頭的 deviceId
-        const cameraId = videoDevices[0].deviceId;
+        const cameraId = videoDevices.length > 1 ? videoDevices[1].deviceId : videoDevices[0].deviceId;
         
+        if (videoDevices.length > 1) {
+            console.log('找到多個攝像頭，使用第二個攝像頭:', videoDevices[1]);
+        } else {
+            console.log('找到一個攝像頭，使用第一個攝像頭:', videoDevices[0]);
+        }
+
         // 使用選擇的攝像頭初始化 Camera 實例
         const camera = new Camera(video1, {
             onFrame: async () => {
