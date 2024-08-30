@@ -220,17 +220,20 @@ navigator.mediaDevices.getUserMedia({ video: true })
           ).join('\n');
           console.log(deviceList);
 
+          const camera = new Camera(video1, {
+            onFrame: async () => {
+                await faceDetection.send({ image: video1 });
+            },
+            width: 480,
+            height: 480,
+            cameraId: devices[0].deviceId,
+        });
+        camera.start(); 
+
         })
 
 
-const camera = new Camera(video1, {
-    onFrame: async () => {
-        await faceDetection.send({ image: video1 });
-    },
-    width: 480,
-    height: 480
-});
-camera.start(); 
+
 
 
 window.addEventListener('resize', adjustCanvasSize);
