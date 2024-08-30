@@ -222,31 +222,42 @@ const id = params.get('id');
 console.log(id);
 
 
-navigator.mediaDevices.getUserMedia({ video: true })
-        .then(() => {
-          return navigator.mediaDevices.enumerateDevices();
-        })
-        .then(devices => {
-          const deviceList = devices.map(device => 
-            `${device.kind}: ${device.label || 'No label'} (ID: ${device.deviceId})`
-          ).join('\n');
+navigator.mediaDevices.enumerateDevices()
+  .then(devices => {
+    const videoDevices = devices.filter(device => device.kind === 'videoinput');
 
-            const videoDevices = devices.filter(device => device.kind === 'videoinput');
-            console.log(videoDevices);
-            console.log(videoDevices[id].deviceId);
+    if (videoDevices.length === 0) {
+      console.error('找不到攝像頭');
+      return;
+    }
 
-          const camera = new Camera(video1, {
-            onFrame: async () => {
-                await faceDetection.send({ image: video1 });
-            },
-            width: 480,
-            height: 480,
-            cameraId: videoDevices[id].deviceId,
-        });
-        camera.start(); 
+    // 假設選擇第一個攝像頭作為預設攝像頭
+    const selectedCameraId = videoDevices[0].deviceId;
 
-        })
+    // 使用 getUserMedia 並指定 deviceId
+    return navigator.mediaDevices.getUserMedia({
+      video: {
+        deviceId: { exact: selectedCameraId } // 指定選擇的攝像頭
+      }
+    });
+  })
+  .then(stream => {
+    // 將影像流放入 video1 標籤
+    video1.srcObject = stream;
 
+    const camera = new Camera(video1, {
+      onFrame: async () => {
+        await faceDetection.send({ image: video1 });
+      },
+      width: 480,
+      height: 480,
+    });
+
+    camera.start(); 
+  })
+  .catch(err => {
+    console.error('發生錯誤：', err);
+  });
 
 
 
