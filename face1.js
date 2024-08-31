@@ -209,6 +209,10 @@ const faceDetection = new FaceDetection({ locateFile: (file) => {
     return `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.0/${file}`;
 }});
 
+
+
+
+
 faceDetection.onResults(onResultsFace);
 
 // 獲取當前頁面的 URL
@@ -251,24 +255,18 @@ navigator.mediaDevices.enumerateDevices()
     video1.srcObject = stream;
     video1.play();
 
-    // 當 video1 開始播放時開始抓取畫面
-    video1.addEventListener('play', function() {
-
-
-      function captureFrame() {
-        
-        faceDetection.send({ image: video1 , height: video1.height, width: video1.width });
-
-        // 繼續下一幀
-        requestAnimationFrame(captureFrame);
-      }
-
-      // 開始抓取影像
-      requestAnimationFrame(captureFrame);
-    });
+    
   })
 
+  const camera = new Camera(video1, {
+    onFrame: async () => {
+      await faceDetection.send({ image: video1 });
+    },
+    width: 480,
+    height: 480,
+  });
 
+  camera.start(); 
 
 
 
