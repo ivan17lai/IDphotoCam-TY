@@ -221,7 +221,6 @@ const url = new URL(window.location.href);
 // 使用 URLSearchParams 來讀取查詢參數
 const params = new URLSearchParams(url.search);
 
-// 獲取 id 參數的值
 const id = params.get('id'); // 從 URL 參數中獲取 id
 
 // 輸出 id 的值
@@ -255,12 +254,17 @@ navigator.mediaDevices.enumerateDevices()
       videoElement.srcObject = stream;
       videoElement.play();
 
-      // 當視頻準備好時，進行人臉檢測
+      // 當視頻準備好時，開始進行人臉檢測
       videoElement.onloadedmetadata = () => {
         console.log('視頻已準備好，開始進行人臉檢測');
         
-        // 開始進行人臉檢測
-        faceDetection.send({ image: videoElement });
+        // 設置循環函數進行人臉檢測
+        const detectFace = async () => {
+          await faceDetection.send({ image: videoElement });
+          requestAnimationFrame(detectFace); // 繼續進行下一幀的檢測
+        };
+
+        detectFace(); // 開始進行人臉檢測
       };
     })
     .catch(error => {
@@ -271,8 +275,6 @@ navigator.mediaDevices.enumerateDevices()
     console.error('無法獲取設備:', error);
   });
 
-
-  
 
 
 
