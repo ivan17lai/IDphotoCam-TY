@@ -228,48 +228,34 @@ const id = params.get('id');
 console.log(id);
 
 
+const videoElement = document.getElementById('video1'); // 假設你有這個 HTML 元素
+
 navigator.mediaDevices.enumerateDevices()
   .then(devices => {
     const videoDevices = devices.filter(device => device.kind === 'videoinput');
     console.log(videoDevices);
-
-
-
 
     if (videoDevices.length === 0) {
       console.error('找不到攝像頭');
       return;
     }
 
-    const selectedCameraId = videoDevices[id].deviceId;
+    const selectedCameraId = videoDevices[id].deviceId; // 這裡可以選擇不同攝像頭
     console.log(selectedCameraId);
 
-    const camera = new Camera(video1, {
+    const camera = new Camera(videoElement, {
         onFrame: async () => {
-          await faceDetection.send({ image: video1 });
+          await faceDetection.send({ image: videoElement });
         },
         width: 480,
         height: 480,
-        cameraId: selectedCameraId,
       });
     
-      camera.start(); 
-
-    // // 使用 getUserMedia 並指定 deviceId
-    // return navigator.mediaDevices.getUserMedia({
-    //   video: {
-    //     deviceId: { exact: selectedCameraId } // 指定選擇的攝像頭
-    //   }
-    // });
+    camera.start();
   })
-//   .then(stream => {
-//     video1.srcObject = stream;
-//     video1.play();
-//     faceDetection.send({ image: video1 });
-    
-//   })
-
-
+  .catch(error => {
+    console.error('錯誤:', error);
+  });
 
   
 
