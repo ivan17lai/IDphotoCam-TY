@@ -254,19 +254,21 @@ navigator.mediaDevices.enumerateDevices()
   .then(stream => {
     video1.srcObject = stream;
     video1.play();
-
+    faceDetection.send({ image: video1 });
     
   })
 
-  const camera = new Camera(video1, {
-    onFrame: async () => {
-      await faceDetection.send({ image: video1 });
-    },
-    width: 480,
-    height: 480,
-  });
+  
 
-  camera.start(); 
+//   const camera = new Camera(video1, {
+//     onFrame: async () => {
+//       await faceDetection.send({ image: video1 });
+//     },
+//     width: 480,
+//     height: 480,
+//   });
+
+//   camera.start(); 
 
 
 
