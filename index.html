@@ -44,44 +44,60 @@
 </body>
 
 <script>
-  let selectedCameraId;
-  const videoElement = document.getElementById('video1');
-  const cameraSelect = document.getElementById('cameraSelect');
-  const goToPageButton = document.getElementById('goToPage');
+let selectedCameraIndex;
+const videoElement = document.getElementById('video1');
+const cameraSelect = document.getElementById('cameraSelect');
+const goToPageButton = document.getElementById('goToPage');
 
-  // 獲取可用攝影機並填充到下拉菜單
+// 獲取可用攝影機並填充到下拉菜單
+navigator.mediaDevices.enumerateDevices()
+  .then(devices => {
+    const videoDevices = devices.filter(device => device.kind === 'videoinput');
+    videoDevices.forEach((device, index) => {
+      const option = document.createElement('option');
+      option.value = index;  // 使用攝影機的索引位置作為選項值
+      option.text = device.label || `攝影機 ${index + 1}`;
+      cameraSelect.appendChild(option);
+    });
+
+    // 預設選擇第一個攝影機並開始預覽
+    if (videoDevices.length > 0) {
+      cameraSelect.selectedIndex = 0;
+      startCameraPreview(0); // 自動預覽第一個攝影機
+    }
+  })
+  .catch(error => console.error('無法獲取攝影機:', error));
+
+// 當攝影機選擇變更時自動開始預覽
+cameraSelect.addEventListener('change', () => {
+  selectedCameraIndex = cameraSelect.value; // 儲存選擇的攝影機索引
+  startCameraPreview(selectedCameraIndex); // 開始預覽
+});
+
+// 開始攝影機預覽的功能
+function startCameraPreview(cameraIndex) {
   navigator.mediaDevices.enumerateDevices()
     .then(devices => {
       const videoDevices = devices.filter(device => device.kind === 'videoinput');
-      videoDevices.forEach((device, index) => {
-        const option = document.createElement('option');
-        option.value = device.deviceId;
-        option.text = device.label || `攝影機 ${index + 1}`;
-        cameraSelect.appendChild(option);
-      });
-    })
-    .catch(error => console.error('無法獲取攝影機:', error));
+      const selectedDeviceId = videoDevices[cameraIndex].deviceId; // 根據選擇的索引獲取 deviceId
 
-  // 當按下「開始預覽」按鈕時，顯示所選攝影機的畫面
-  document.getElementById('startCamera').addEventListener('click', () => {
-    selectedCameraId = cameraSelect.value;
-    if (selectedCameraId) {
       navigator.mediaDevices.getUserMedia({
-        video: { deviceId: selectedCameraId }
+        video: { deviceId: selectedDeviceId }
       })
       .then(stream => {
         videoElement.srcObject = stream;
         goToPageButton.disabled = false; // 啟用跳轉按鈕
       })
       .catch(error => console.error('無法啟動攝影機:', error));
-    }
-  });
+    });
+}
 
-  // 當按下「進入拍照頁面」按鈕時，跳轉到指定的頁面並傳遞選擇的攝影機 ID
-  goToPageButton.addEventListener('click', () => {
-    if (selectedCameraId) {
-      window.location.href = `https://ivan17lai.github.io/IDphotoCam-TY/?id=${selectedCameraId}`;
-    }
-  });
+// 當按下「進入拍照頁面」按鈕時，跳轉到指定的頁面並傳遞選擇的攝影機索引
+goToPageButton.addEventListener('click', () => {
+  if (selectedCameraIndex !== undefined) {
+    window.location.href = `https://ivan17lai.github.io/IDphotoCam-TY/?id=${selectedCameraIndex}`;
+  }
+});
+
 </script>
 </html>
