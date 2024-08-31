@@ -244,31 +244,34 @@ navigator.mediaDevices.enumerateDevices()
     const selectedCameraId = videoDevices[id].deviceId;
     console.log(selectedCameraId);
 
-    // 使用 getUserMedia 並指定 deviceId
-    return navigator.mediaDevices.getUserMedia({
-      video: {
-        deviceId: { exact: selectedCameraId } // 指定選擇的攝像頭
-      }
-    });
-  })
-  .then(stream => {
-    video1.srcObject = stream;
-    video1.play();
-    faceDetection.send({ image: video1 });
+    const camera = new Camera(video1, {
+        onFrame: async () => {
+          await faceDetection.send({ image: video1 });
+        },
+        width: 480,
+        height: 480,
+        cameraId: selectedCameraId,
+      });
     
+      camera.start(); 
+
+    // // 使用 getUserMedia 並指定 deviceId
+    // return navigator.mediaDevices.getUserMedia({
+    //   video: {
+    //     deviceId: { exact: selectedCameraId } // 指定選擇的攝像頭
+    //   }
+    // });
   })
+//   .then(stream => {
+//     video1.srcObject = stream;
+//     video1.play();
+//     faceDetection.send({ image: video1 });
+    
+//   })
+
+
 
   
-
-//   const camera = new Camera(video1, {
-//     onFrame: async () => {
-//       await faceDetection.send({ image: video1 });
-//     },
-//     width: 480,
-//     height: 480,
-//   });
-
-//   camera.start(); 
 
 
 
