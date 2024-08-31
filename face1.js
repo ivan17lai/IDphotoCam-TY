@@ -222,11 +222,10 @@ const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 
 // 獲取 id 參數的值
-const id = params.get('id');
+const id = params.get('id'); // 從 URL 參數中獲取 id
 
 // 輸出 id 的值
 console.log(id);
-
 
 const videoElement = document.getElementById('video1'); // 假設你有這個 HTML 元素
 
@@ -240,22 +239,38 @@ navigator.mediaDevices.enumerateDevices()
       return;
     }
 
-    const selectedCameraId = videoDevices[id].deviceId; // 這裡可以選擇不同攝像頭
+    const selectedCameraId = videoDevices[id].deviceId; // 選擇指定的攝像頭
     console.log(selectedCameraId);
 
-    const camera = new Camera(videoElement, {
-        onFrame: async () => {
-          await faceDetection.send({ image: videoElement });
-        },
-        width: 480,
-        height: 480,
-      });
-    
-    camera.start();
+    // 根據選定的攝像頭 ID 獲取視頻流
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        deviceId: selectedCameraId,  // 使用指定的攝像頭
+        width: 480,                  // 設置視頻的寬度
+        height: 480                  // 設置視頻的高度
+      }
+    })
+    .then(stream => {
+      // 將攝像頭的視頻流設置為 video 元素的來源
+      videoElement.srcObject = stream;
+      videoElement.play();
+
+      // 當視頻準備好時，進行人臉檢測
+      videoElement.onloadedmetadata = () => {
+        console.log('視頻已準備好，開始進行人臉檢測');
+        
+        // 開始進行人臉檢測
+        faceDetection.send({ image: videoElement });
+      };
+    })
+    .catch(error => {
+      console.error('無法獲取攝像頭視頻流:', error);
+    });
   })
   .catch(error => {
-    console.error('錯誤:', error);
+    console.error('無法獲取設備:', error);
   });
+
 
   
 
