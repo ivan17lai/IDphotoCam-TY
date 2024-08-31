@@ -250,16 +250,8 @@ navigator.mediaDevices.enumerateDevices()
   .then(stream => {
     // 將影像流放入 video1 標籤
     video1.srcObject = stream;
+    video1.play();
 
-    // const camera = new Camera(video1, {
-    //   onFrame: async () => {
-    //     await faceDetection.send({ image: video1 });
-    //   },
-    //   width: 480,
-    //   height: 480,
-    // });
-
-    // camera.start(); 
   })
 
 
