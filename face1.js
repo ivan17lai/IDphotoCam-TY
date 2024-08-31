@@ -35,7 +35,7 @@ function onResultsFace(results) {
         const rightEdgeY = rightEdge.y * out1.height;
 
         const centerX = (leftEdgeX + rightEdgeX) / 2;
-        const centerY = (leftEdgeY + rightEdgeY) / 2 - 30;
+        const centerY = (leftEdgeY + rightEdgeY) / 2 - shot_high;
 
         let faceWidth = Math.sqrt(Math.pow(rightEdgeX - leftEdgeX, 2) + Math.pow(rightEdgeY - leftEdgeY, 2));
 
@@ -92,7 +92,7 @@ function onResultsFace(results) {
         canvasCtx1.font = '24px Arial';
         canvasCtx1.fillStyle = 'red';
         canvasCtx1.fontWeight = 'bold';
-        canvasCtx1.fillText('無法偵測人臉-可自行對準', startX  + 10, startY + boxHeight+6 +shot_high);
+        canvasCtx1.fillText('無法偵測人臉-可自行對準', startX  + 10, startY + boxHeight+6 +30);
     }
 }
 
@@ -284,6 +284,7 @@ navigator.mediaDevices.enumerateDevices()
   // 每當拉桿的值改變時執行動作
   slider.addEventListener('input', (event) => {
       console.log(`滑動條的值為: ${event.target.value}`);
+      shot_high = event.target.value;
   });
 
 

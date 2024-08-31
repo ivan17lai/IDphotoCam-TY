@@ -524,7 +524,7 @@ html, body {
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  width: 300px; /* 高度實際上是水平的寬度 */
+  width: 50px; /* 高度實際上是水平的寬度 */
   height: 8px;
   background: #ddd;
   outline: none;
@@ -547,7 +547,7 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: #4CAF50;
+  background: #B3E5FC;
   cursor: pointer;
   border-radius: 50%;
 }
