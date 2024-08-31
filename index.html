@@ -129,7 +129,7 @@
 </body>
 
 <script>
-let selectedCameraIndex;
+let selectedCameraIndex = 0;  // 初始化為第一個攝影機
 const videoElement = document.getElementById('video1');
 const cameraSelect = document.getElementById('cameraSelect');
 const goToPageButton = document.getElementById('goToPage');
@@ -138,6 +138,12 @@ const goToPageButton = document.getElementById('goToPage');
 navigator.mediaDevices.enumerateDevices()
   .then(devices => {
     const videoDevices = devices.filter(device => device.kind === 'videoinput');
+    
+    if (videoDevices.length === 0) {
+      console.error('找不到攝影機');
+      return;
+    }
+    
     videoDevices.forEach((device, index) => {
       const option = document.createElement('option');
       option.value = index;  // 使用攝影機的索引位置作為選項值
@@ -146,10 +152,8 @@ navigator.mediaDevices.enumerateDevices()
     });
 
     // 預設選擇第一個攝影機並開始預覽
-    if (videoDevices.length > 0) {
-      cameraSelect.selectedIndex = 0;
-      startCameraPreview(0); // 自動預覽第一個攝影機
-    }
+    cameraSelect.selectedIndex = 0; // 預設選第一個
+    startCameraPreview(0); // 自動預覽第一個攝影機
   })
   .catch(error => console.error('無法獲取攝影機:', error));
 
@@ -180,9 +184,12 @@ function startCameraPreview(cameraIndex) {
 // 當按下「進入拍照頁面」按鈕時，跳轉到指定的頁面並傳遞選擇的攝影機索引
 goToPageButton.addEventListener('click', () => {
   if (selectedCameraIndex !== undefined) {
+    // 檢查選擇的攝影機索引
+    console.log(`選擇的攝影機索引: ${selectedCameraIndex}`);
     window.location.href = `https://ivan17lai.github.io/IDphotoCam-TY/main.html?id=${selectedCameraIndex}`;
   }
 });
+
 
 </script>
 </html>
