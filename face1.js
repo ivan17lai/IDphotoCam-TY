@@ -254,17 +254,17 @@ navigator.mediaDevices.enumerateDevices()
       videoElement.srcObject = stream;
       videoElement.play();
 
-      // 當視頻準備好時，開始進行人臉檢測
+      // 定義每幀進行檢測的函數
+      const detectFace = async () => {
+        // 使用 faceDetection 處理 video 元素的畫面
+        await faceDetection.send({ image: videoElement });
+        requestAnimationFrame(detectFace); // 在下一幀時繼續檢測
+      };
+
+      // 當視頻準備好時，開始進行檢測
       videoElement.onloadedmetadata = () => {
         console.log('視頻已準備好，開始進行人臉檢測');
-        
-        // 設置循環函數進行人臉檢測
-        const detectFace = async () => {
-          await faceDetection.send({ image: videoElement });
-          requestAnimationFrame(detectFace); // 繼續進行下一幀的檢測
-        };
-
-        detectFace(); // 開始進行人臉檢測
+        detectFace(); // 開始檢測循環
       };
     })
     .catch(error => {
