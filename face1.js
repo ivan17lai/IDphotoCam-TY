@@ -237,8 +237,8 @@ navigator.mediaDevices.enumerateDevices()
       return;
     }
 
-    // 假設選擇第一個攝像頭作為預設攝像頭
     const selectedCameraId = videoDevices[id].deviceId;
+    console.log(selectedCameraId);
 
     // 使用 getUserMedia 並指定 deviceId
     return navigator.mediaDevices.getUserMedia({
@@ -251,15 +251,15 @@ navigator.mediaDevices.enumerateDevices()
     // 將影像流放入 video1 標籤
     video1.srcObject = stream;
 
-    const camera = new Camera(video1, {
-      onFrame: async () => {
-        await faceDetection.send({ image: video1 });
-      },
-      width: 480,
-      height: 480,
-    });
+    // const camera = new Camera(video1, {
+    //   onFrame: async () => {
+    //     await faceDetection.send({ image: video1 });
+    //   },
+    //   width: 480,
+    //   height: 480,
+    // });
 
-    camera.start(); 
+    // camera.start(); 
   })
 
 
