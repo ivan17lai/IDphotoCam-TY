@@ -51,22 +51,22 @@ function onResultsFace(results) {
         boxCoordinates = { startX, startY, boxWidth, boxHeight };
 
 
-        // 检查框框是否超出画布边界
         const isOutOfBounds = startX < 0 || startY < 0 || startX + boxWidth > out1.width || startY + boxHeight > out1.height;
 
         if (isOutOfBounds) {
-            // 框框超出边界，变为橘色，并禁用拍摄按钮
+
             canvasCtx1.strokeStyle = 'orange';
-            captureBtn.disabled = true; // 禁用拍摄按钮
+            captureBtn.disabled = true
         } else {
-            // 框框在边界内，保持白色，并启用拍摄按钮
+
             canvasCtx1.strokeStyle = 'white';
-            captureBtn.disabled = false; // 启用拍摄按钮
+            captureBtn.disabled = false;
         }
 
         canvasCtx1.lineWidth = 4;
         canvasCtx1.strokeRect(startX-3, startY-3, boxWidth+6, boxHeight+6);
     } else {
+        captureBtn.disabled = false; 
         faceDetected = false;
 
         // 没有检测到人脸时，显示一个固定比例的红色框
