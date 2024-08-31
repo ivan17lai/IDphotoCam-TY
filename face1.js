@@ -69,7 +69,6 @@ function onResultsFace(results) {
         captureBtn.disabled = false; 
         faceDetected = false;
 
-        // 没有检测到人脸时，显示一个固定比例的红色框
         let boxWidth = 200 * 1.6;
         if (boxWidth % 5 !== 0) {
             boxWidth += 5 - (boxWidth % 5);

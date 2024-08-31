@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!-- V1.0 202408310411 -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.1/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.0/face_detection.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <script src="https://unpkg.com/pdf-lib"></script>
+    <script src="https://unpkg.com/fontkit"></script>
+    
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pdf_style.css">
+
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="column-leftBar">
+
+        <button id="home-page-bt" class="left-round-button-main" style="margin-top: 10%;">
+          <span class="material-icons">
+            home
+          </span>
+        </button>
+
+        <hr style="margin-top: 20%; margin-bottom: 4%; margin-left: 2%; margin-right: 2%;">
+
+        <button id="shot-page-bt" class="left-round-button" style="margin-top: 16%;">
+          <span class="material-icons">
+            photo_camera
+          </span>
+        </button>
+
+        <button id="check-page-bt" class="left-round-button" style="margin-top: 16%;">
+          <span class="material-icons">
+            fact_check
+          </span>
+        </button>
+
+        <button id="rename-page-bt" class="left-round-button" style="margin-top: 16%;">
+          <span class="material-icons">
+            manage_accounts
+          </span>
+        </button>
+
+
+      </div>
+
+      <div class="columns-home" id="home-page" style="display: flex; flex-direction:column">
+
+        <div class="app-title">
+          TYCAM 拍照系統
+        </div>
+
+        <div class="app-title" style="font-size: 30; margin: 1%;">
+          一個完整的流程，協助拍攝新生證件照。
+        </div>
+
+        <div class="teach-container">
+        
+          <div class="teach-block">
+
+            <div class="teach-title">
+              步驟1
+            </div>
+            <div class="teach-text">
+              拍攝證件照 並自動裁切規定比例
+            </div>
+            <div class="teach-text" style="font-size: 20px; margin-top: 10px;">
+              1.上傳符合格式之學生資料Excel檔案。 <a href="https://github.com/ivan17lai/IDphotoCam-TY/raw/main/excel_file/%E6%9B%B4%E6%96%B0%E5%BE%8C%E7%9A%84%E5%AD%B8%E7%94%9F%E8%B3%87%E6%96%99_%E9%9A%A8%E6%A9%9F%E6%95%B8%E5%AD%97.xlsx
+              " class="button">範例檔案</a>
+              <br>
+              2.選擇班級及學生。<br>
+              3.打開鏡頭，系統會自動辨識人臉，按下拍照按鈕即可拍攝。<br>
+              4.下載的證件照比例為 1:1.2 ，檔案名稱可以自行勾選設定。<br>
+              注意事項：<br>
+              1.請確認拍攝完成後有確實存檔且照無誤。<br>
+              2.如果需要列印確認單，檔案名稱至少勾選班級、姓名、身分證，預設為建議選項。<br>
+            </div>
+
+          </div>
+
+          <div class="teach-block">
+
+            <div class="teach-title">
+              步驟2
+            </div>
+            <div class="teach-text">
+              列印確認單 確認照片與資料無誤
+            </div>
+            <div class="teach-text" style="font-size: 20px; margin-top: 10px;">
+              1.上傳檔名開頭為X班、Y班的所有學生照片。<br>
+              2.按下下載或列印按鈕即可下載或列印確認單。<br>
+            </div>
+
+          </div>
+
+          <div class="teach-block">
+
+            <div class="teach-title">
+              步驟3
+            </div>
+            <div class="teach-text">
+              將檔案名稱轉換為身分證字號
+            </div>
+            <div class="teach-text" style="font-size: 20px; margin-top: 10px;">
+              1.選擇所有學生的照片，其中檔名必須包括身分證字號。<br>
+              2.下載檔案<br>
+            </div>
+
+          </div>
+        
+        </div>
+
+      </div>
+
+      <div class="micro-set"  style="margin-top: 2%; display: none;">
+
+        <fieldset>
+          <legend>檔案名稱組合</legend>
+
+          <div>
+            <input type="checkbox" id="class" name="class" checked />
+            <label for="class">班級</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="sid" name="sid"  />
+            <label for="sid">學號</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="sitnu" name="sitnu" checked/>
+            <label for="sitnu">座號</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="name" name="name" checked/>
+            <label for="name">姓名</label>
+          </div>
+
+          <div style="display: none;">
+            <input type="checkbox" id="id" name="id" checked/>
+            <label for="id">身分證</label>
+          </div>
+
+        </fieldset>
+
+      </div>
+
+
+
+      <div class="columns" id="shot-page" style="display: none;">
+      
+
+        <div class="column column-input_video" style="display: none;">
+          <article class="panel is-info">
+            <div class="panel-block">
+              <video class="input_video1"  ></video>
+              <video class="video_in" id="video1">
+              <div id="videoContainer" class="column column-input_video"></div>
+
+            </div>
+          </article>
+        </div>
+
+
+        <div class="column-classBar">
+          
+          <div class="classbar-title">
+            <div class="classbar-text">
+              班級
+            </div>
+            <button id="openfile2" class="openfile-samll" style="display: none;">
+              <span class="material-icons" style="font-size: 20px">
+                folder_open
+              </span>
+            </button>
+          </div>
+
+          <button id="openfile" class="openfile-button" style="display: block;">
+            選擇檔案 
+            <span class="material-icons">
+              folder_open
+            </span>
+          </button>
+
+          <input type="file" id="fileInput" style="display: none;">
+          
+          <div class="classbuttom-Bar" id="classbuttom-Bar"></div>
+
+        </div>
+        
+
+        <div class="column-information">
+          <div id="student-list"></div>
+          <div class="student-Bar" id="student-Bar"></div>
+
+
+        </div>
+
+
+        <div class="column-canvas">
+          
+            <div class="camera-view">
+
+              <div class="cap-inf">
+
+                <div class="canvas-block">
+                  <canvas class="output1" width="480" height="480" style="display: block;"></canvas>
+                  
+                  <div class="shoted" id="shoted" style="display: none;">
+                    <div id="capturedImageContainer"></div>
+                    
+                  </div>
+                
+                </div>
+
+                <div class="student-information" id="student-information">
+                  尚未選擇學生
+                </div>
+
+                
+      
+              </div>
+
+
+                <div class="shot-bar" style="margin-left: 5%;">
+                  <button id="captureBtn" class="button is-primary round-button">
+                    <span class="material-icons">
+                      photo_camera
+                    </span>
+                  </button>
+                </div>
+
+                <div class="shoted-bar" style="display: none;">
+                  <button id="reshot" class="button is-primary round-button">
+                    <span class="material-icons">
+                      refresh
+                    </span>
+                  </button>
+
+                  <button id="savephoto" class="button is-primary round-button" style="margin-top: 10%;">
+                    <span class="material-icons">
+                      save
+                    </span>
+                  </button>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="columns-home" id="rename-page" style="display: none;">
+
+        <div class="column-checkpage-updatefile">
+
+          <div class="classbar-title">
+            <div class="just-column">
+              <div class="classbar-text">
+                上傳所有照片<br>
+                (檔名轉換)
+              </div>
+            </div>
+
+            <button id="openfile2-rename" class="openfile-samll" style="display: none;">
+              <span class="material-icons" style="font-size: 20px">
+                folder_open
+              </span>
+            </button>
+          </div>
+
+          <button id="openfile-rename" class="openfile-button" style="display: block;">
+            選擇檔案 
+            <span class="material-icons">
+              folder_open
+            </span>
+          </button>
+
+
+          
+
+
+          <input type="file" id="fileInput-rename" style="display: none;" multiple>
+
+        
+          
+          <div class="classbuttom-Bar" id="buttom-Bar-check">
+
+          </div>
+          
+        </div>
+
+        <div class="column-checkpage" style="padding: 1%; display: flex; flex-direction: column;">
+          
+          
+          <button id="download-all"  style="display: none" class="button is-primary round-button-download" style="margin-top: 10%;">
+            
+            <span class="material-icons" style="margin-bottom: 2%;">
+              download
+            </span>
+        
+          </button>
+
+          <div class="overview">
+
+            
+          
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- next page -->
+
+
+      <div class="columns-home" id="check-page" style="display: none;">
+
+        <div class="column-checkpage-updatefile">
+
+          <div class="classbar-title">
+            <div class="just-column">
+              <div class="classbar-text">
+                上傳所有照片<br>(列印確認單)
+              </div>
+            </div>
+
+            <button id="openfile2-check" class="openfile-samll" style="display: none;">
+              <span class="material-icons" style="font-size: 20px">
+                folder_open
+              </span>
+            </button>
+          </div>
+
+          <button id="openfile-check" class="openfile-button" style="display: block;">
+            選擇檔案 
+            <span class="material-icons">
+              folder_open
+            </span>
+          </button>
+
+
+          
+
+
+          <input type="file" id="fileInput-check" style="display: none;" multiple>
+
+        
+          
+          <div class="classbuttom-Bar" id="buttom-Bar-check">
+
+          </div>
+          
+        </div>
+
+        <div class="column-checkpage" style="padding: 1%;">
+
+
+
+          <div class="column-buttom" style="display: flex; flex-direction: column;">
+          
+            <button id="download-pdf" class="button is-primary round-button-download" style="margin-top: 10%;">
+            
+              <span class="material-icons">
+                download
+              </span>
+          
+            </button>
+  
+            <button id="print-pdf" class="button is-primary round-button-download" style="margin-top: 10%;">
+              
+              <span class="material-icons">
+                print
+              </span>
+          
+            </button>
+          
+          </div>
+          
+
+
+          <div class="pdf-view">
+          
+            <div id="pages"></div>
+          
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- 偷偷放個乖乖 拜託不要出BUG 我已經快忘記我之前在寫甚麼了 -->
+      <img src="https://www.kuai.com.tw/uploads/product/tw/%E4%B9%96%E4%B9%96%E7%8E%89%E7%B1%B3%E8%84%86%E6%A2%9D_%E5%A5%B6%E6%B2%B9%E6%A4%B0%E5%AD%90.webp" style="display: none;">
+
+      
+    </div>
+    
+    <script type="text/javascript" src="./face1.js"></script>
+    <script type="text/javascript" src="./excel_read.js"></script>
+    <script type="text/javascript" src="./randomColor.js"></script>
+    <script type="text/javascript" src="./page_change.js"></script>
+    <script type="text/javascript" src="./check_pdf.js"></script>
+    <script type="text/javascript" src="./rename.js"></script>
+    <script type="text/javascript" src="./cam.js"></script>
+
+
+    
+  </body>
+</html>
+
