@@ -9,6 +9,9 @@ const shoted = document.getElementById('shoted');
 
 var now_filename = 'photo';
 
+var shot_high = 30
+
+
 const shoted_bar = document.getElementsByClassName('shoted-bar');
 const shot_bar = document.getElementsByClassName('shot-bar');
 
@@ -89,7 +92,7 @@ function onResultsFace(results) {
         canvasCtx1.font = '24px Arial';
         canvasCtx1.fillStyle = 'red';
         canvasCtx1.fontWeight = 'bold';
-        canvasCtx1.fillText('無法偵測人臉-可自行對準', startX  + 10, startY + boxHeight+6 +30);
+        canvasCtx1.fillText('無法偵測人臉-可自行對準', startX  + 10, startY + boxHeight+6 +shot_high);
     }
 }
 
@@ -274,6 +277,14 @@ navigator.mediaDevices.enumerateDevices()
     console.error('無法獲取設備:', error);
   });
 
+
+  
+  const slider = document.getElementById('vertical-slider');
+
+  // 每當拉桿的值改變時執行動作
+  slider.addEventListener('input', (event) => {
+      console.log(`滑動條的值為: ${event.target.value}`);
+  });
 
 
 
