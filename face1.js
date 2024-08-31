@@ -248,10 +248,24 @@ navigator.mediaDevices.enumerateDevices()
     });
   })
   .then(stream => {
-    // 將影像流放入 video1 標籤
     video1.srcObject = stream;
     video1.play();
 
+    // 當 video1 開始播放時開始抓取畫面
+    video1.addEventListener('play', function() {
+
+
+      function captureFrame() {
+        
+        faceDetection.send({ image: video1 , height: video1.height, width: video1.width });
+
+        // 繼續下一幀
+        requestAnimationFrame(captureFrame);
+      }
+
+      // 開始抓取影像
+      requestAnimationFrame(captureFrame);
+    });
   })
 
 
