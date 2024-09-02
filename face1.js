@@ -28,9 +28,7 @@ function changeSize() {
     }
 }
 
-sizechange.addEventListener('click', () => {
-    changeSize();
-});
+
 
 function onResultsFace(results) {
     document.body.classList.add('loaded');
@@ -307,6 +305,10 @@ navigator.mediaDevices.enumerateDevices()
       console.log(`滑動條的值為: ${event.target.value}`);
       shot_high = event.target.value;
   });
+
+  sizechange.addEventListener('click', () => {
+    changeSize();
+});
 
 
 
