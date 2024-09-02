@@ -92,8 +92,8 @@ function onResultsFace(results) {
         captureBtn.disabled = false; 
         faceDetected = false;
 
-        let boxWidth = 200 * 1.6;
-        let boxHeight = 0;
+        const boxWidth = 200 * 1.6;
+        const boxHeight = 0;
         if (sizechange.innerHTML === '5:6') {
             if (boxWidth % 5 !== 0) {
                 boxWidth += 5 - (boxWidth % 5);
