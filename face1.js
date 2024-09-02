@@ -51,16 +51,16 @@ function onResultsFace(results) {
 
         let faceWidth = Math.sqrt(Math.pow(rightEdgeX - leftEdgeX, 2) + Math.pow(rightEdgeY - leftEdgeY, 2));
         let boxHeight = 0;
-
+        let boxWidth = 0;
         if (sizechange.innerHTML === '5:6') {
-            let boxWidth = Math.ceil(faceWidth * 1.65);
+            boxWidth = Math.ceil(faceWidth * 1.65);
             if (boxWidth % 5 !== 0) {
                 boxWidth += 5 - (boxWidth % 5);
             }
 
             boxHeight = Math.round(boxWidth * 1.2);
         }else {
-            let boxWidth = Math.ceil(faceWidth * 1.65);
+            boxWidth = Math.ceil(faceWidth * 1.65);
             if (boxWidth % 4 !== 0) {
                 boxWidth += 4 - (boxWidth % 4);
             }
@@ -93,10 +93,19 @@ function onResultsFace(results) {
         faceDetected = false;
 
         let boxWidth = 200 * 1.6;
-        if (boxWidth % 5 !== 0) {
-            boxWidth += 5 - (boxWidth % 5);
+        let boxHeight = 0;
+        if (sizechange.innerHTML === '5:6') {
+            if (boxWidth % 5 !== 0) {
+                boxWidth += 5 - (boxWidth % 5);
+            }
+
+            boxHeight = Math.round(boxWidth * 1.2);
+        }else {
+            if (boxWidth % 4 !== 0) {
+                boxWidth += 4 - (boxWidth % 4);
+            }
+            boxHeight = Math.round(boxWidth * 1.25);
         }
-        let boxHeight = Math.round(boxWidth * 1.2);
 
         const centerX = out1.width / 2;
         const centerY = out1.height / 2;
