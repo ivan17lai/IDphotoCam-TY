@@ -7,6 +7,8 @@ const captureBtn = document.getElementById('captureBtn');
 const capturedImageContainer = document.getElementById('capturedImageContainer');
 const shoted = document.getElementById('shoted');
 
+const sizechange = document.getElementById('size-change');
+
 var now_filename = 'photo';
 
 var shot_high = 30
@@ -17,6 +19,18 @@ const shot_bar = document.getElementsByClassName('shot-bar');
 
 let boxCoordinates = null;
 let faceDetected = false;
+
+function changeSize() {
+    if (sizechange.innerHTML === '5:6') {
+        sizechange.innerHTML = '4:5';
+    } else{
+        sizechange.innerHTML = '5:6';
+    }
+}
+
+sizechange.addEventListener('click', () => {
+    changeSize();
+});
 
 function onResultsFace(results) {
     document.body.classList.add('loaded');
@@ -39,14 +53,21 @@ function onResultsFace(results) {
 
         let faceWidth = Math.sqrt(Math.pow(rightEdgeX - leftEdgeX, 2) + Math.pow(rightEdgeY - leftEdgeY, 2));
 
-        // 先将宽度调整为5的倍数
-        let boxWidth = Math.ceil(faceWidth * 1.65);
-        if (boxWidth % 5 !== 0) {
-            boxWidth += 5 - (boxWidth % 5);
+        if (sizechange.innerHTML === '5:6') {
+            let boxWidth = Math.ceil(faceWidth * 1.65);
+            if (boxWidth % 5 !== 0) {
+                boxWidth += 5 - (boxWidth % 5);
+            }
+
+            let boxHeight = Math.round(boxWidth * 1.2);
+        }else {
+            let boxWidth = Math.ceil(faceWidth * 1.65);
+            if (boxWidth % 4 !== 0) {
+                boxWidth += 4 - (boxWidth % 4);
+            }
+            let boxHeight = Math.round(boxWidth * 1.25);
         }
 
-        // 然后计算1.2倍的高度
-        let boxHeight = Math.round(boxWidth * 1.2);
 
         const startX = centerX - (boxWidth / 2);
         const startY = centerY - (boxHeight / 2);
