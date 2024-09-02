@@ -50,6 +50,7 @@ function onResultsFace(results) {
         const centerY = (leftEdgeY + rightEdgeY) / 2 - shot_high;
 
         let faceWidth = Math.sqrt(Math.pow(rightEdgeX - leftEdgeX, 2) + Math.pow(rightEdgeY - leftEdgeY, 2));
+        let boxHeight = 0;
 
         if (sizechange.innerHTML === '5:6') {
             let boxWidth = Math.ceil(faceWidth * 1.65);
@@ -57,13 +58,13 @@ function onResultsFace(results) {
                 boxWidth += 5 - (boxWidth % 5);
             }
 
-            let boxHeight = Math.round(boxWidth * 1.2);
+            boxHeight = Math.round(boxWidth * 1.2);
         }else {
             let boxWidth = Math.ceil(faceWidth * 1.65);
             if (boxWidth % 4 !== 0) {
                 boxWidth += 4 - (boxWidth % 4);
             }
-            let boxHeight = Math.round(boxWidth * 1.25);
+            boxHeight = Math.round(boxWidth * 1.25);
         }
 
 
@@ -158,6 +159,13 @@ function reShot() {
 reshot.addEventListener('click', () => {
     reShot();
 });
+
+
+sizechange.addEventListener('click', () => {
+    changeSize();
+    console.log('Change size to ', sizechange.innerHTML);
+});
+
 
 // 保存學生照片後的處理
 savephoto.addEventListener('click', () => {
@@ -306,9 +314,6 @@ navigator.mediaDevices.enumerateDevices()
       shot_high = event.target.value;
   });
 
-  sizechange.addEventListener('click', () => {
-    changeSize();
-});
 
 
 
