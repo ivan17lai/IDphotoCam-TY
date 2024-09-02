@@ -6,10 +6,21 @@ document.getElementById('openfile2-rename').addEventListener('click', function()
     document.getElementById('fileInput-rename').click();
 });
 
+document.getElementById('delete').addEventListener('click', function() {
+    document.getElementById('openfile-rename').style.display = 'block';
+    document.getElementById('openfile2-rename').style.display = 'none';
+    document.getElementById('download-all').style.display = 'none'; 
+    document.getElementById('delete').style.display = 'none';
+    document.getElementById('fileInput-rename').value = '';
+    document.querySelector('.overview').innerHTML = '';
+});
+
 document.getElementById('fileInput-rename').addEventListener('change', function() {
     document.getElementById('openfile-rename').style.display = 'none';
     document.getElementById('openfile2-rename').style.display = 'block';
     document.getElementById('download-all').style.display = 'block'; 
+    document.getElementById('delete').style.display = 'block';
+
     const files = this.files;
     const renamedFiles = [];
 
