@@ -109,6 +109,8 @@ document.getElementById('fileInput-check').addEventListener('change', async func
                 let displayName = name.replace(/[A-Z]\d{9}/, ''); // 去掉一位英文+九位數字的部分
                 displayName = displayName.trim(); // 去掉可能的前後空白
 
+                displayName = displayName.substring(displayName.lastIndexOf('班') + 1).trim();
+
                 const wrapper = document.createElement('div');
                 wrapper.className = 'image-wrapper';
                 const img = document.createElement('img');
